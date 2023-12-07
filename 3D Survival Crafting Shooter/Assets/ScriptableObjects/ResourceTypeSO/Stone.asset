@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d8bdcb7b8045994291180dc07c2e6de, type: 3}
+  m_Name: Stone
+  m_EditorClassIdentifier: 
+  nameString: Stone
+  sprite: {fileID: 21300000, guid: 3f63bcd9350eeaa45a87cb5e3e38172c, type: 3}
+  harvestabilityLevel: 2
+  destroyParticle: {fileID: 1081873676032641159, guid: c1642b187af7ccd439f8855c8efd05c4,
+    type: 3}
