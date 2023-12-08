@@ -119,16 +119,19 @@ public class ToolManager : MonoBehaviour {
         bool objectInfront = Physics.Raycast(activeToolTransform[activeToolSO].position, Camera.main.transform.forward, out hitInfo, activeToolSO.reach);
         if (!objectInfront) { return; }
 
-        ResourceTypeHolder resourceHolder = hitInfo.transform.GetComponent<ResourceTypeHolder>();
         HealthSystem targetHealthSystem = hitInfo.transform.GetComponent<HealthSystem>();
+        if (targetHealthSystem == null) { return; }
+
+        ResourceTypeHolder resourceHolder = hitInfo.transform.GetComponent<ResourceTypeHolder>();
+        
 
         if (targetHealthSystem != null && resourceHolder == null) {
             
             targetHealthSystem.Damage(activeToolSO.damage);
 
             currentToolDurability[activeToolSO] -= 1;
-      
-        
+
+            return;
         }
 
         
@@ -139,6 +142,10 @@ public class ToolManager : MonoBehaviour {
                 targetHealthSystem.Damage(1);
 
                 AddMetalChance(resourceHolder);
+                if (activeToolSO.hitSound != null) {
+                    SoundManager.Instance.PlaySound(activeToolSO.hitSound, hitInfo.point, 0.5f);
+                }
+                
 
                 if (targetHealthSystem.IsDead()) {
                     Destroy(hitInfo.transform.gameObject);
@@ -161,8 +168,6 @@ public class ToolManager : MonoBehaviour {
 
         if (currentToolDurability[activeToolSO] <= 0) {
             RemoveTool(activeToolSO);
-        } else {
-            Debug.Log("Tool Durability: " + currentToolDurability[activeToolSO]);
         }
         
     }
@@ -201,6 +206,14 @@ public class ToolManager : MonoBehaviour {
                 ResourceManager.Instance.AddResource(metalResourceType, 1);
             }
         }
+    }
+
+    public float GetCurrentToolDurability() {
+        return currentToolDurability[activeToolSO];
+    }
+
+    public float GetCurrentToolMaxDurability() {
+        return activeToolSO.durability;
     }
 
 }

@@ -14,9 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameString: Basic Hoe
   prefab: {fileID: 4181357990884295050, guid: 4021f8cbbb8613842a1ab100926ddae2, type: 3}
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 32fb7e0aee1614fe8ac38467a139e9a6, type: 3}
   damage: 3
   swingSpeed: 0.9
   durability: 45
   reach: 2
   harvestable: 3
+  hitParticle: {fileID: 0}
+  hitSound: {fileID: 8300000, guid: 44070b67c63872641b65aab5c062caa7, type: 3}

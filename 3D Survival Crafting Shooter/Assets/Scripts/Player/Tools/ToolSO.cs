@@ -26,6 +26,7 @@ public class ToolSO : ScriptableObject {
 
     [Header("SFX")]
     public GameObject hitParticle;
+    public AudioClip hitSound;
 
     
 

@@ -15,17 +15,14 @@ public class CraftingMenuUI : MonoBehaviour {
     [SerializeField] private Transform recipeContainer;
     [SerializeField] private Transform resourceContainer;
     [SerializeField] private Transform resourceTemplate;
+    [SerializeField] private TextMeshProUGUI currentDurabilityText;
 
     public Dictionary<GameObject, RecipeSO> craftButtonRecipeMap = new Dictionary<GameObject, RecipeSO>();
     private Dictionary<ResourceTypeSO, Transform> resourceTypeTransformUI = new Dictionary<ResourceTypeSO, Transform>();
     private bool craftingOpen;
-    private Transform background;
 
     private void Awake() {
         Instance = this;
-
-        craftingRecipeButtonTemplate.SetActive(false);
-        background = transform.GetChild(0);
 
         foreach (RecipeSO recipeSO in recipeSOList) {
             if (!craftButtonRecipeMap.ContainsValue(recipeSO)) {
@@ -40,39 +37,14 @@ public class CraftingMenuUI : MonoBehaviour {
     
 
     private void Start() {
-        resourceContainer.gameObject.SetActive(false);
-        resourceTemplate.gameObject.SetActive(false);
-        recipeContainer.gameObject.SetActive(false);
-        background.gameObject.SetActive(false);
-        craftingOpen = false;
+        craftingOpen = true;
+        ToggleVisibility();
         
     }
 
     private void Update() {
         if (Input.GetKeyDown(KeyCode.E) || craftingOpen && Input.GetKeyDown(KeyCode.Escape)) {
-            if (!craftingOpen) {
-                Cursor.lockState = CursorLockMode.None;
-                Time.timeScale = 0f;
-
-                foreach (RecipeSO recipeSO in recipeSOList) {
-                    if (!craftButtonRecipeMap.ContainsValue(recipeSO)) {
-                        CreateCraftingRecipe(recipeSO);
-                    }
-                }
-                craftingOpen = true;
-                recipeContainer.gameObject.SetActive(true);
-                background.gameObject.SetActive(true);
-                resourceContainer.gameObject.SetActive(true);
-            } else if (craftingOpen){
-                Cursor.lockState = CursorLockMode.Locked;
-                Time.timeScale = 1f;
-                recipeContainer.gameObject.SetActive(false);
-                background.gameObject.SetActive(false);
-                resourceContainer.gameObject.SetActive(false);
-                craftingOpen = false;
-                
-            }
-            
+            ToggleVisibility();
 
         }
     }
@@ -134,6 +106,36 @@ public class CraftingMenuUI : MonoBehaviour {
 
     public void UpdateResourceUI(ResourceTypeSO resourceTypeSO) {
         resourceTypeTransformUI[resourceTypeSO].Find("Text").GetComponent<TextMeshProUGUI>().text = ResourceManager.Instance.GetResourceAmount(resourceTypeSO).ToString();
+    }
+
+    private void UpdateCurrentDurability() {
+        currentDurabilityText.text = "Tool Durability: " + ToolManager.Instance.GetCurrentToolDurability() + "/" + ToolManager.Instance.GetCurrentToolMaxDurability();
+    }
+
+    private void ToggleVisibility() {
+        UpdateCurrentDurability();
+        foreach (Transform child in transform) {
+            child.gameObject.SetActive(!child.gameObject.activeSelf);
+        }
+
+        foreach (RecipeSO recipeSO in recipeSOList) {
+            if (!craftButtonRecipeMap.ContainsValue(recipeSO)) {
+                CreateCraftingRecipe(recipeSO);
+            }
+        }
+
+        craftingRecipeButtonTemplate.SetActive(false);
+        resourceTemplate.gameObject.SetActive(false);
+
+        craftingOpen = !craftingOpen;
+
+        if (craftingOpen) {
+            Cursor.lockState = CursorLockMode.None;
+            Time.timeScale = 0f;
+        } else {
+            Cursor.lockState = CursorLockMode.Locked;
+            Time.timeScale = 1f;
+        }
     }
 
 }

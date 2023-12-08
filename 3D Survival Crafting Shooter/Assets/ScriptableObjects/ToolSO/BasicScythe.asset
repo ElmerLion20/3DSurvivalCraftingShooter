@@ -14,11 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameString: Scythe
   prefab: {fileID: 5499057094133807294, guid: 6d5c973482b67d04e8b5574a2dc815a5, type: 3}
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 32fb7e0aee1614fe8ac38467a139e9a6, type: 3}
   damage: 10
   swingSpeed: 0.35
   durability: 100
   reach: 4
   harvestable: 0
   hitParticle: {fileID: 0}
-  hitSound: {fileID: 0}

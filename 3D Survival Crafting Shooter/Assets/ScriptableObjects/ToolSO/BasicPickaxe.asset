@@ -22,4 +22,4 @@ MonoBehaviour:
   harvestable: 2
   hitParticle: {fileID: 1758473627833946668, guid: 9b21333b068a5084ba09535839bee3c8,
     type: 3}
-  hitSound: {fileID: 0}
+  hitSound: {fileID: 8300000, guid: c22e807b1bfa10045864a9bb52caa610, type: 3}
